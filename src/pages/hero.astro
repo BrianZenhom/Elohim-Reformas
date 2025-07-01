@@ -1,0 +1,291 @@
+---
+import Clock from "../assets/clock.svg";
+import Brick from "../assets/brick.svg";
+import Ruler from "../assets/ruler.svg";
+import Star from "../assets/star.svg";
+const reviews = [
+  "Elohim convirtió nuestra casa en un hogar. ¡Gracias! — Laura G.",
+  "Con su ayuda, logramos nuestro sueño. Profesionalismo total. — Carlos y Ana",
+  "Rápidos, eficientes y con excelente trato. ¡Recomendadísimos! — Marta R.",
+  "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
+];
+---
+
+<section class="hero" id="inicio">
+  <article class="hero-content">
+    <div class="hero-title-sub">
+      <h1 class="hero-title">
+        <span class="highlight-word">CONSTRUYENDO</span>
+        <span class="highlight-word">CON</span>
+        <span class="highlight-word">PROPÓSITO.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Nos apasiona transformar ideas en espacios reales, funcionales y
+        duraderos, cuidando cada etapa del proceso con dedicación, transparencia
+        y compromiso contigo.
+      </p>
+      <button class="hero-button">¡TU PRESUPUESTO GRATIS!</button>
+      <div class="hero-incentives">
+        <div class="stars">
+          <Star /><Star /><Star /><Star /><Star />
+        </div>
+        <span class="proyects">+1000 Proyectos</span>
+        <span class="experience">+14 Años de experiencia</span>
+        <span class="guarante">Garantía total</span>
+      </div>
+      <div class="hero-icon">
+        <span class="hero-icon-item"><Clock />Entrega a tiempo</span>
+        <span class="hero-icon-item"><Brick />Diseño con calidad</span>
+        <span class="hero-icon-item"><Ruler />Precisión a detalle</span>
+      </div>
+      <div class="hero-opinion">
+        <p id="rotating-review">{reviews[0]}</p>
+      </div>
+    </div>
+    <div class="hero_images">
+      <img src="/hero.png" alt="Hero Image" />
+    </div>
+  </article>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    .hero-opinion {
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .hero-opinion.fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-opinion.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    justify-content: center;
+  }
+
+  .hero_images {
+    object-fit: cover;
+    max-height: 900px;
+    overflow: hidden;
+    border-radius: 5px;
+    position: relative;
+    background-position: center;
+  }
+
+  .hero_images img {
+    object-fit: cover;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .highlight-word {
+    color: #1a3347;
+    font-weight: 900;
+    animation: highlight 12s infinite;
+  }
+
+  .highlight-word:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .highlight-word:nth-child(2) {
+    animation-delay: 3s;
+  }
+
+  .highlight-word:nth-child(3) {
+    animation-delay: 6s;
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-title-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .hero_images {
+    width: 100%;
+  }
+
+  .hero-title-sub h1 {
+    font-size: 58px;
+  }
+
+  .hero-title-sub span {
+    font-weight: 800;
+  }
+
+  .hero-title-sub p {
+    color: #1a3347;
+    font-size: 14px;
+  }
+
+  .hero-button {
+    padding: 1rem 2rem;
+    background-color: #1a3347;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 2rem;
+    max-width: 350px;
+    font-family:
+      "Onest",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.1s ease-out;
+  }
+
+  .hero-button:hover {
+    background-color: #e98a15;
+  }
+
+  .hero-incentives {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: #e98a15;
+  }
+
+  .hero-icon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-icons {
+    font-size: 24px;
+    align-items: center;
+    color: #000000;
+  }
+
+  .hero-icon-item {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .hero-opinion p {
+    font-size: 16px;
+    color: #929292;
+    font-family: "RobotoItalic";
+  }
+
+  .hero-opinion {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    text-align: start;
+    min-height: 60px;
+  }
+
+  #rotating-review {
+    transition:
+      opacity 0.5s ease-in-out,
+      transform 0.5s ease-in-out;
+    display: inline-block;
+  }
+
+  #rotating-review.fade-out {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+
+  #rotating-review.fade-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .hero-stars {
+    font-size: 18px;
+  }
+
+  .stars {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  @keyframes highlight {
+    0% {
+      color: #1a3347;
+      opacity: 1;
+    }
+    20% {
+      color: #e98a15;
+      opacity: 0.8;
+    }
+    33% {
+      color: #e98a15;
+      opacity: 0.8;
+    }
+    50% {
+      color: #1a3347;
+      opacity: 1;
+    }
+    100% {
+      color: #1a3347;
+      opacity: 1;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 18px !important;
+  }
+</style>
+
+<script>
+  const reviews = [
+    "Elohim convirtió nuestra casa en un hogar. ¡Gracias! — Laura G.",
+    "Con su ayuda, logramos nuestro sueño. Profesionalismo total. — Carlos y Ana",
+    "Rápidos, eficientes y con excelente trato. ¡Recomendadísimos! — Marta R.",
+    "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
+  ];
+
+  let current = 0;
+  const reviewElement = document.getElementById("rotating-review");
+
+  function rotateReview() {
+    reviewElement?.classList.remove("fade-in");
+    reviewElement?.classList.add("fade-out");
+
+    setTimeout(() => {
+      current = (current + 1) % reviews.length;
+      reviewElement.textContent = reviews[current];
+      reviewElement?.classList.remove("fade-out");
+      reviewElement?.classList.add("fade-in");
+    }, 500);
+  }
+
+  setInterval(rotateReview, 4000);
+</script>

@@ -1,0 +1,24 @@
+{
+  "reseñas": [
+    {
+      "nombre": "Juan P.",
+      "reseña": "Excelente servicio. Los trabajadores son profesionales y hacen un trabajo excelente."
+    },
+    {
+      "nombre": "Laura G.",
+      "reseña": "Elohim convirtió nuestra casa en un hogar. ¡Gracias!"
+    },
+    {
+      "nombre": "Roberto R.",
+      "reseña": "Nos encantó trabajar con Elohim. Su equipo es muy responsable."
+    },
+    {
+      "nombre": "Luisa M.",
+      "reseña": "Revivieron mi casa con un diseño moderno y crearon un ambiente acogedor."
+    },
+    {
+      "nombre": "María L.",
+      "reseña": "Disfrutamos del proceso de construcción y el resultado final superó nuestras expectativas."
+    }
+  ]
+}

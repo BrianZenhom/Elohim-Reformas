@@ -1,0 +1,102 @@
+---
+import Quote from "../assets/quote.svg";
+import Star from "../assets/star.svg";
+interface Props {
+  testimonial: string;
+  name: string;
+  position: string;
+  image: string;
+}
+
+const { testimonial, name, position, image } = Astro.props;
+---
+
+<div class="testimonial-card">
+  <div class="testimonial-card-content">
+    <Quote />
+    <img src={image} alt={name} />
+    <div class="testimonial-card-content-text">
+      <div class="testimonial-card-content-name">
+        <h4>
+          {name}
+        </h4>
+        <span>-</span>
+        <div>
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+        </div>
+      </div>
+
+      <span>{position}</span>
+      <p>{testimonial}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .testimonial-card {
+    max-width: 920px;
+    max-height: 400px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card-content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.212);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+    border-radius: 8px;
+  }
+
+  .testimonio-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .testimonial-card-content-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .testimonial-card-content-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .testimonial-card-content-text h4 {
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+
+  .testimonial-card-content-text span {
+    font-size: 14px;
+    color: #4a8fe7;
+  }
+
+  .testimonial-card-content-text p {
+    font-size: 14px;
+    color: rgb(216, 205, 205);
+  }
+
+  .testimonial-card-content img {
+    max-width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+</style>

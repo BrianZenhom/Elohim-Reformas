@@ -1,0 +1,131 @@
+---
+import Phone from "../assets/phone.svg";
+import Mail from "../assets/mail.svg";
+---
+
+<section class="location" id="location">
+  <article class="location-content">
+    <div class="location-contact-info">
+      <div class="location-contact-title">
+        <h3>Contáctanos</h3>
+        <p>
+          Si tienes alguna pregunta o necesitas más información, no dudes en
+          contactarnos.
+        </p>
+      </div>
+      <div class="location-contact-info-icons">
+        <div class="location-contact-info-icon">
+          <Phone />
+          <p>312 345 6789</p>
+        </div>
+        <div class="location-contact-info-icon">
+          <Mail />
+          <p>contacto@elohimreformas.com</p>
+        </div>
+      </div>
+      <button class="location-button">¡O hablanos por whatsapp!</button>
+    </div>
+
+    <div class="location-container">
+      <div class="location-title-sub">
+        <h3>Ubicación</h3>
+        <p>Encuentra nuestra oficina en el corazón de la ciudad.</p>
+      </div>
+      <div class="location-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.262665272226!2d-75.58256202626203!3d6.26256202626203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442a1a1a1a1a1a%3A0x1a1a1a1a1a1a1a1a!2sElohim%20Reformas!5e0!3m2!1sen!2sco!4v1682766000000!5m2!1sen!2sco"
+          width="600"
+          height="200"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </article>
+</section>
+
+<style>
+  .location {
+    min-height: 400px;
+  }
+  .location-content {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .location-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .location-contact-info {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .location-contact-title h3 {
+    font-size: 24px;
+  }
+
+  .location-title-sub h3 {
+    font-size: 24px;
+  }
+
+  .location-contact-title p {
+    font-size: 18px;
+    color: #929292;
+  }
+
+  .location-title-sub p {
+    font-size: 18px;
+    color: #929292;
+  }
+  .location-contact-info button {
+    width: 400px;
+    border: none;
+    font-family: "Onest";
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.1s ease-out;
+    padding: 0.5rem;
+    background-color: #1a3347;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .location-contact-info-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .location-contact-info-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .location-contact-info-icon .phone-icon {
+    font-size: 24px;
+  }
+  .location-contact-info-icon p {
+    display: flex;
+    font-family: "Onest";
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.1s ease-out;
+  }
+
+  .location-contact-info-icon .mail-icon {
+    font-size: 24px;
+  }
+</style>

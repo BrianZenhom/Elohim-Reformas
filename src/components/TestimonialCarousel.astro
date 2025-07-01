@@ -1,0 +1,108 @@
+---
+import TestimonialCard from "./TestimonialCard.astro";
+const { testimonials } = Astro.props;
+
+import Prev from "../assets/prev.svg";
+import Next from "../assets/next.svg";
+import Star from "../assets/star.svg";
+---
+
+<div class="carousel">
+  <div class="carousel__track-wrapper">
+    <div class="carousel__track">
+      {
+        testimonials.map((testimonial: any, i: number) => (
+          <div class="carousel__slide" key={i}>
+            <TestimonialCard {...testimonial} />{" "}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <button class="carousel__button prev"><Prev /></button>
+  <button class="carousel__button next"><Next /></button>
+
+  <script type="module" is:inline>
+    let index = 0;
+    const track = document.querySelector(".carousel__track");
+    const slides = document.querySelectorAll(".carousel__slide");
+
+    function carouselScroll(direction) {
+      const total = slides.length;
+      index = (index + direction + total) % total;
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    // make buttons work
+    document
+      .querySelector(".carousel__button.prev")
+      .addEventListener("click", () => {
+        carouselScroll(-1);
+      });
+    document
+      .querySelector(".carousel__button.next")
+      .addEventListener("click", () => {
+        carouselScroll(1);
+      });
+
+    // create auto scroll
+    setInterval(() => {
+      carouselScroll(1);
+    }, [5500]);
+  </script>
+
+  <style>
+    .carousel {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .carousel__track-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .carousel__track {
+      display: flex;
+      transition: transform 0.5s ease;
+      width: 100%;
+    }
+
+    .carousel__slide {
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+
+    .carousel__button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border: none;
+
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 2rem;
+      padding: 0.25rem 0.75rem;
+      cursor: pointer;
+      z-index: 2;
+      transition: all 0.1s ease-out;
+    }
+
+    .carousel__button:hover .carousel-icons {
+      color: #4a8fe7;
+      transition: all 0.1s ease-out;
+    }
+
+    .carousel__button.prev {
+      left: 0;
+    }
+
+    .carousel__button.next {
+      right: 0;
+    }
+  </style>
+</div>
