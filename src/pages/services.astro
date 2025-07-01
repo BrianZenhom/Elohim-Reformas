@@ -65,7 +65,7 @@ import Maintenance from "../assets/maintenance.svg";
             </div>
           </div>
 
-          <p class="services-text-subtitle">CLIENTES SATISFECHOS</p>
+          <p class="services-text-subtitle">Clientes satisfechos</p>
         </div>
       </div>
 
@@ -100,13 +100,13 @@ import Maintenance from "../assets/maintenance.svg";
               </div>
             </div>
           </div>
-          <p class="services-text-subtitle">PROYECTOS COMPLETADOS</p>
+          <p class="services-text-subtitle">Proyectos completados</p>
         </div>
       </div>
     </div>
   </article>
 
-  <style>
+  <style is:global>
     .services {
       min-height: 100dvh;
       padding-top: 10rem;
@@ -158,6 +158,7 @@ import Maintenance from "../assets/maintenance.svg";
 
     .services-title-sub p {
       text-wrap: balance;
+      color: #929292;
     }
 
     .digits {
@@ -229,6 +230,62 @@ import Maintenance from "../assets/maintenance.svg";
     .digits > div {
       height: 1em;
       line-height: 1em;
+    }
+
+    /* make this global */
+    @media (width <= 490px) {
+      .services {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      .services-title-sub h2 {
+        font-size: 18px;
+      }
+
+      .services-title-sub p {
+        font-size: 14px;
+        color: #929292;
+      }
+
+      .services-cards {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      .services-años-de-experiencia {
+        max-width: fit-content;
+      }
+
+      .services-clientes-satisfechos {
+        gap: 2rem;
+      }
+
+      .card-content h3 {
+        font-size: 18px;
+      }
+
+      .card-content p {
+        font-size: 14px;
+      }
+      .services-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .odometer {
+        font-size: 34px;
+      }
+
+      .services-clientes-satisfechos-content-text p {
+        font-size: 12px;
+        text-wrap: wrap;
+      }
+
+      .services-line {
+        height: 120px;
+      }
     }
   </style>
 

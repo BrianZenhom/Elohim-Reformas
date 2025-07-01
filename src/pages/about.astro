@@ -14,9 +14,12 @@
           > Nuestros inicios se remontan a Colombia, nuestro país de origen, donde
           dimos los primeros pasos en esta profesión. Con el tiempo, expandimos nuestra
           trayectoria al ámbito internacional, consolidando nuestra presencia al
-          otro lado del Atlántico. Contamos con más de 14 años de experiencia en
-          el sector, especializados en la edificación de viviendas y en proyectos
-          de reforma.
+          otro lado del Atlántico.
+        </p>
+        <p>
+          Contamos con más de 14 años de experiencia en el sector,
+          especializados en la edificación de viviendas y en proyectos de
+          reforma.
         </p>
       </div>
       <div class="about-nuestramission">
@@ -107,5 +110,36 @@
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  @media (width <= 490px) {
+    .about {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .about-title-sub h2 {
+      font-size: 18px;
+    }
+
+    .about-title-sub p {
+      font-size: 14px;
+      color: #929292;
+      text-wrap: balance;
+    }
+
+    .about-title-sub b {
+      color: #e98a15;
+    }
+
+    .about-nuestramission h3 {
+      font-size: 16px;
+    }
+
+    .about-nuestramission b {
+      font-size: 14px;
+      font-weight: 600;
+    }
   }
 </style>
