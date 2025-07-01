@@ -63,8 +63,8 @@ const links = [
       box-shadow 0.3s ease;
   }
 
-  .logo-container .logo {
-    fill: black;
+  .logo {
+    width: 180px;
   }
   .navbar-content {
     max-width: 1280px;
@@ -137,5 +137,11 @@ const links = [
 
   .phone-icon {
     font-size: 24px;
+  }
+
+  @media (width <= 430px) {
+    .logo {
+      width: 120px;
+    }
   }
 </style>
