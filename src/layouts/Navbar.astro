@@ -20,7 +20,7 @@ const links = [
       </a>
     </div>
     <div class="nav-center">
-      <ul class="nav-links">
+      <ul id="navlinks" class="nav-links">
         {
           links.map((link) => (
             <li>
@@ -158,6 +158,21 @@ const links = [
     gap: 0.5rem;
   }
 
+  .phone-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .whatsapp-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .instagram-icon {
+    width: 24px;
+    height: 24px;
+  }
+
   .burger-menu {
     display: none;
     background: none;
@@ -244,6 +259,8 @@ const links = [
   .mobile-nav-links {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -252,11 +269,11 @@ const links = [
   .mobile-nav-links {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: end;
     list-style: none;
     margin: 0;
     padding: 0;
-    font-family: "Onest", sans-serif;
-    font-size: 16px;
   }
 
   .mobile-nav-links li {
@@ -264,7 +281,7 @@ const links = [
   }
 
   .mobile-nav-links li a {
-    font-size: 24px;
+    font-size: 18px;
     padding: 0.5rem 0;
     transition: color 0.3s ease;
     letter-spacing: 0.5px;
@@ -298,9 +315,24 @@ const links = [
     .mobile-menu {
       display: block;
     }
+
+    .phone-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .whatsapp-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .instagram-icon {
+      width: 20px;
+      height: 20px;
+    }
   }
 
-  @media (max-width: 490px) {
+  @media (max-width: 900px) {
     .logo {
       width: 120px;
     }

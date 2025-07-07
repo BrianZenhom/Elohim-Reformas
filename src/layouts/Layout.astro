@@ -3,10 +3,11 @@ import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
 
 interface Props {
-  client: 'browser';
+  client: "browser";
+  title: string;
 }
 
-const { client } = Astro.props;
+const { client, title } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,7 +17,14 @@ const { client } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Elohim Reformas</title>
+    <meta name="description" content="Elohim Edifica" />
+    <meta
+      name="keywords"
+      content="Elohim Edifica, Reformas, Construcción, Diseño"
+    />
+    <meta name="author" content="Elohim Edifica" />
+
+    <title>{title}</title>
   </head>
   <Navbar client="browser" />
   <body>
@@ -25,227 +33,229 @@ const { client } = Astro.props;
     </main>
   </body>
   <Footer client="browser" />
-</html>
 
-<style is:global>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <style is:global>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-100-normal.woff");
-    font-weight: 100;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-100-normal.woff");
+      font-weight: 100;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-200-normal.woff");
-    font-weight: 200;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-200-normal.woff");
+      font-weight: 200;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-300-normal.woff");
-    font-weight: 300;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-300-normal.woff");
+      font-weight: 300;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-400-normal.woff");
-    font-weight: 400;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-400-normal.woff");
+      font-weight: 400;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-500-normal.woff");
-    font-weight: 500;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-500-normal.woff");
+      font-weight: 500;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-600-normal.woff");
-    font-weight: 600;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-600-normal.woff");
+      font-weight: 600;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-700-normal.woff");
-    font-weight: 700;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-700-normal.woff");
+      font-weight: 700;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-800-normal.woff");
-    font-weight: 800;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-800-normal.woff");
+      font-weight: 800;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Onest";
-    src: url("/fonts/onest-latin-900-normal.woff");
-    font-weight: 900;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Onest";
+      src: url("/fonts/onest-latin-900-normal.woff");
+      font-weight: 900;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "Roboto";
-    src: url("/fonts/Roboto-Regular.woff");
-    font-weight: 400;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: "Roboto";
+      src: url("/fonts/Roboto-Regular.woff");
+      font-weight: 400;
+      font-style: normal;
+    }
 
-  @font-face {
-    font-family: "RobotoItalic";
-    src: url("/fonts/Roboto-Italic.woff");
-    font-weight: 400;
-    font-style: italic;
-  }
+    @font-face {
+      font-family: "RobotoItalic";
+      src: url("/fonts/Roboto-Italic.woff");
+      font-weight: 400;
+      font-style: italic;
+    }
 
-  html,
-  body {
-    background-color: #f5efe7;
-    color: #1a3347;
-    font-family:
-      "Onest",
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      "Open Sans",
-      "Helvetica Neue",
-      sans-serif;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 100vw;
-  }
+    html,
+    body {
+      background-color: #f5efe7;
+      color: #1a3347;
+      font-family:
+        "Onest",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Open Sans",
+        "Helvetica Neue",
+        sans-serif;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: 100vw;
+    }
 
-  a {
-    display: inline-block;
-    line-height: 0;
-  }
+    a {
+      display: inline-block;
+      line-height: 0;
+    }
 
-  p {
-    font-family:
-      "Roboto",
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      "Open Sans",
-      "Helvetica Neue",
-      sans-serif;
-    line-height: 1.3;
-    text-wrap: pretty;
-  }
+    p {
+      font-family:
+        "Roboto",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Open Sans",
+        "Helvetica Neue",
+        sans-serif;
+      line-height: 1.3;
+    }
 
-  section {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
+    section {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
 
-  .hero {
-    position: relative;
-    width: 100%;
-  }
+    .hero {
+      position: relative;
+      width: 100%;
+    }
 
-  .about-line {
-    content: '';
+    .about-line {
+      content: "";
       height: 1px;
       background: linear-gradient(to right, #1a334700, #000000, #e98a1500);
       margin: 0;
       max-width: 1280px;
       margin: 0 auto;
     }
+  </style>
 
-    
-</style>
+  <script>
+    // Get all navigation links and sections
+    const navLinks = document.querySelectorAll("#navlinks a");
+    const sections = document.querySelectorAll("section");
 
-<script>
-  // Get all navigation links and sections
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const sections = document.querySelectorAll('section');
+    // Function to scroll to section with offset
+    const scrollToSection = (id) => {
+      const section = document.querySelector(`#${id}`);
+      if (section) {
+        const offset = 100; // Offset for header and fixed elements
+        const targetPosition = section.offsetTop - offset;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth",
+        });
+      }
+    };
 
-  // Function to scroll to section with offset
-  const scrollToSection = (id) => {
-    const section = document.querySelector(`#${id}`);
-    if (section) {
-      const offset = 100; // Offset for header and fixed elements
-      const targetPosition = section.offsetTop - offset;
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
+    // Function to update active link based on scroll position
+    const updateActiveLink = () => {
+      let current = "";
 
-  // Function to update active link based on scroll position
-  const updateActiveLink = () => {
-    let current = '';
-    
-    // Check if we're at the top of the page
-    if (window.scrollY < 100) {
-      current = 'inicio';
-    } else {
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        const sectionId = section.getAttribute('id');
-        const offset = 80; // Add an offset to account for the header and any other fixed elements
-        
-        if (sectionId && window.scrollY >= (sectionTop - sectionHeight / 3 - offset)) {
-          current = sectionId;
+      // Check if we're at the top of the page
+      if (window.scrollY < 100) {
+        current = "inicio";
+      } else {
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          const sectionId = section.getAttribute("id");
+          const offset = 80; // Add an offset to account for the header and any other fixed elements
+
+          if (
+            sectionId &&
+            window.scrollY >= sectionTop - sectionHeight / 3 - offset
+          ) {
+            current = sectionId;
+          }
+        });
+      }
+
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        const href = link.getAttribute("href");
+        const linkText = link.textContent?.toLowerCase() || "";
+
+        // Handle both / and /inicio for the home link
+        if (current === "inicio" && (href === "#" || href === "#inicio")) {
+          link.classList.add("active");
+        } else if (href && href === `#${current}`) {
+          link.classList.add("active");
         }
       });
-    }
+    };
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      const href = link.getAttribute('href');
-      const linkText = link.textContent?.toLowerCase() || '';
-      
-      // Handle both / and /inicio for the home link
-      if (current === 'inicio' && (href === '#' || href === '#inicio')) {
-        link.classList.add('active');
-      } else if (href && href === `#${current}`) {
-        link.classList.add('active');
-      }
+    // Initial check
+    updateActiveLink();
+
+    // Add click event listeners to navigation links
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = link.getAttribute("href");
+        if (href) {
+          const targetId = href.replace("#", "");
+          scrollToSection(targetId);
+        }
+      });
     });
-  };
 
-  // Initial check
-  updateActiveLink();
+    // Add scroll event listener
+    window.addEventListener("scroll", updateActiveLink);
+  </script>
 
-  // Add click event listeners to navigation links
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      if (href) {
-        const targetId = href.replace('#', '');
-        scrollToSection(targetId);
-      }
-    });
-  });
 
-  // Add scroll event listener
-  window.addEventListener('scroll', updateActiveLink);
-</script>
+</html>
