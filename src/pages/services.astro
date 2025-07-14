@@ -37,7 +37,7 @@ import Maintenance from "../assets/maintenance.svg";
     <div class="services-clientes-satisfechos flex-version">
       <div class="services-clientes-satisfechos-content">
         <div class="services-clientes-satisfechos-content-text">
-          <p>Absolutamente comprometidos</p>
+          <p>Compleamente comprometidos</p>
           <div class="odometer services-number" id="odometer">
             <div class="digit-column">
               <div class="digits">
@@ -207,11 +207,9 @@ import Maintenance from "../assets/maintenance.svg";
 
     .odometer {
       display: flex;
-      font-size: 3em;
       border-radius: 8px;
       width: fit-content;
       margin: auto;
-      font-size: clamp(24px, 10vw, 124px);
     }
 
     .digit-column {
@@ -252,7 +250,7 @@ import Maintenance from "../assets/maintenance.svg";
         gap: 2rem;
       }
       .services-años-de-experiencia {
-        max-width: fit-content;
+        min-width: fit-content;
       }
 
       .services-clientes-satisfechos {
@@ -278,11 +276,30 @@ import Maintenance from "../assets/maintenance.svg";
       .services-clientes-satisfechos-content-text p {
         font-size: 12px;
         text-wrap: wrap;
-        max-width: 70%;
+        text-align: center;
+      }
+
+      .services-clientes-satisfechos-content-text .services-text-subtitle {
+        text-align: center;
       }
 
       .services-line {
         height: 120px;
+        display: none;
+        visibility: hidden;
+      }
+
+      .flex-version {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .odometer {
+        display: flex;
+        border-radius: 8px;
+        width: fit-content;
+        margin: auto;
+        font-size: 100px;
       }
     }
   </style>
