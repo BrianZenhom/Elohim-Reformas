@@ -32,9 +32,20 @@ const links = [
     </div>
     <div class="nav-right">
       <button class="burger-menu" aria-label="Toggle navigation menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24px"
+          height="24px"
+          viewBox="0 0 24 24"
+          ><g fill="none"
+            ><path
+              d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
+            ></path><path
+              fill="currentColor"
+              d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"
+            ></path></g
+          ></svg
+        >
       </button>
       <ul class="nav-links nogap">
         <li><a href="tel:+34624350394" class="phone-link"><Phone /></a></li>
@@ -57,8 +68,20 @@ const links = [
   </header>
   <div class="mobile-menu">
     <button class="close-menu" aria-label="Close menu">
-      <span></span>
-      <span></span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24px"
+        height="24px"
+        viewBox="0 0 24 24"
+        ><g fill="none" fillRule="evenodd"
+          ><path
+            d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
+          ></path><path
+            fill="currentColor"
+            d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"
+          ></path></g
+        ></svg
+      >
     </button>
     <ul class="mobile-nav-links">
       {
@@ -174,12 +197,16 @@ const links = [
   }
 
   .burger-menu {
-    display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
     transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    visibility: hidden;
   }
 
   .burger-menu span {
@@ -235,8 +262,6 @@ const links = [
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 20px;
-    width: 20px;
     z-index: 1002;
   }
 
@@ -274,6 +299,7 @@ const links = [
     list-style: none;
     margin: 0;
     padding: 0;
+    margin-top: 2rem;
   }
 
   .mobile-nav-links li {
@@ -295,6 +321,10 @@ const links = [
   }
 
   @media (max-width: 900px) {
+    .burger-menu {
+      visibility: visible;
+    }
+
     .nav-center {
       display: none;
     }
@@ -309,7 +339,7 @@ const links = [
     }
 
     .burger-menu {
-      display: block;
+      display: flex;
     }
 
     .mobile-menu {
@@ -332,9 +362,13 @@ const links = [
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width <= 900px) {
     .logo {
       width: 120px;
+    }
+
+    .burger-menu {
+      display: flex !important;
     }
   }
 </style>
