@@ -184,16 +184,14 @@ const { client, title } = Astro.props;
   </style>
 
   <script>
-    // Get all navigation links and sections
-    const navLinks = document.querySelectorAll("#navlinks a");
-    const sections = document.querySelectorAll("section");
+    const NAVBAR_OFFSET = 72; // Adjust if your navbar has a different height
 
-    // Function to scroll to section with offset
+    // Scroll to section with offset
     const scrollToSection = (id) => {
       const section = document.querySelector(`#${id}`);
       if (section) {
-        const offset = 100; // Offset for header and fixed elements
-        const targetPosition = section.offsetTop - offset;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const targetPosition = sectionTop - NAVBAR_OFFSET;
         window.scrollTo({
           top: targetPosition,
           behavior: "smooth",
@@ -201,11 +199,12 @@ const { client, title } = Astro.props;
       }
     };
 
-    // Function to update active link based on scroll position
+    // Update active link based on scroll position
     const updateActiveLink = () => {
+      const navLinks = document.querySelectorAll("#navlinks a");
+      const sections = document.querySelectorAll("section");
       let current = "";
 
-      // Check if we're at the top of the page
       if (window.scrollY < 100) {
         current = "inicio";
       } else {
@@ -213,7 +212,7 @@ const { client, title } = Astro.props;
           const sectionTop = section.offsetTop;
           const sectionHeight = section.clientHeight;
           const sectionId = section.getAttribute("id");
-          const offset = 80; // Add an offset to account for the header and any other fixed elements
+          const offset = NAVBAR_OFFSET;
 
           if (
             sectionId &&
@@ -229,7 +228,6 @@ const { client, title } = Astro.props;
         const href = link.getAttribute("href");
         const linkText = link.textContent?.toLowerCase() || "";
 
-        // Handle both / and /inicio for the home link
         if (current === "inicio" && (href === "#" || href === "#inicio")) {
           link.classList.add("active");
         } else if (href && href === `#${current}`) {
@@ -238,23 +236,38 @@ const { client, title } = Astro.props;
       });
     };
 
-    // Initial check
-    updateActiveLink();
-
-    // Add click event listeners to navigation links
-    navLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const href = link.getAttribute("href");
-        if (href) {
-          const targetId = href.replace("#", "");
-          scrollToSection(targetId);
-        }
+    // Set scroll-margin-top for all sections (for native anchor clicks)
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("section").forEach((section) => {
+        section.style.scrollMarginTop = NAVBAR_OFFSET + "px";
       });
-    });
 
-    // Add scroll event listener
-    window.addEventListener("scroll", updateActiveLink);
+      // Handle scroll on page load with hash
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.replace("#", "");
+        setTimeout(() => {
+          scrollToSection(id);
+        }, 10);
+      }
+
+      // Add click listeners
+      const navLinks = document.querySelectorAll("#navlinks a");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = link.getAttribute("href");
+          if (href) {
+            const targetId = href.replace("#", "");
+            scrollToSection(targetId);
+          }
+        });
+      });
+
+      // Initial check
+      updateActiveLink();
+      window.addEventListener("scroll", updateActiveLink);
+    });
   </script>
 
 
