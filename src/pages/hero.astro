@@ -382,16 +382,16 @@ import TextPlugin from "gsap/TextPlugin";
     effect: (targets, config) => {
       return gsap.fromTo(
         targets,
-        { filter: "blur(100px)", opacity: 0 },
+        { filter: "blur(300px)", opacity: 0 },
         {
           filter: "blur(0px)",
           opacity: 1,
-          duration: 0.6,
+          duration: 1,
           ease: "power2.out",
         }
       );
     },
-    defaults: { duration: 0.5 },
+    defaults: { duration: 1 },
     extendTimeline: true,
   });
 
@@ -409,18 +409,24 @@ import TextPlugin from "gsap/TextPlugin";
         }
       );
     },
-    defaults: { duration: 0.5 },
+    defaults: { duration: 1 },
     extendTimeline: true,
   });
-  let tl = gsap.timeline();
+  const appearItems = [
+    { selector: ".hero-title", duration: 3 },
+    { selector: ".hero-subtitle", duration: 6 },
+    { selector: ".hero-button", duration: 9 },
+  ];
 
-  tl.explode(".hero-title", {
-    duration: 0.5,
-  })
-    .explode(".hero-subtitle", { duration: 1 }, "+=.1")
-    .explode(".hero-button", { duration: 1 }, "+=.1")
-    .fade(".hero-incentives", { duration: 1 }, "+=.1")
-    .fade(".hero-icon", { duration: 1 }, "+=.1");
+  let tl = gsap.timeline();
+  appearItems.forEach((item) => {
+    tl.explode(item.selector, { duration: item.duration }, 0); // All start at time 0
+  });
+  tl.fade(".hero-incentives", { duration: 1 }, 0).fade(
+    ".hero-icon",
+    { duration: 1 },
+    0
+  );
 
   window.addEventListener("DOMContentLoaded", () => {
     const reviews = [
