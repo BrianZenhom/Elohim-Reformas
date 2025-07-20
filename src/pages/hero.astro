@@ -9,6 +9,12 @@ const reviews = [
   "Rápidos, eficientes y con excelente trato. ¡Recomendadísimos! — Marta R.",
   "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
 ];
+
+// gsap
+import gsap from "gsap";
+import MotionPathPlugin from "gsap/MotionPathPlugin";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
+import TextPlugin from "gsap/TextPlugin";
 ---
 
 <section class="hero" id="inicio">
@@ -24,6 +30,7 @@ const reviews = [
         duraderos, cuidando cada etapa del proceso con dedicación, transparencia
         y compromiso contigo.
       </p>
+
       <button
         class="hero-button"
         onclick="window.open('https://wa.me/+34624350394', '_blank')"
@@ -367,27 +374,72 @@ const reviews = [
 </style>
 
 <script>
-  const reviews = [
-    "Elohim convirtió nuestra casa en un hogar. ¡Gracias! — Laura G.",
-    "Con su ayuda, logramos nuestro sueño. Profesionalismo total. — Carlos y Ana",
-    "Rápidos, eficientes y con excelente trato. ¡Recomendadísimos! — Marta R.",
-    "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
-  ];
+  import gsap from "gsap";
 
-  let current = 0;
-  const reviewElement = document.getElementById("rotating-review");
+  // Register a custom 'explode' effect for blur/unblur animation
+  gsap.registerEffect({
+    name: "explode",
+    effect: (targets, config) => {
+      return gsap.fromTo(
+        targets,
+        { filter: "blur(100px)" },
+        {
+          filter: "blur(0px)",
+          duration: 0.6,
+          ease: "power2.out",
+        }
+      );
+    },
+    defaults: { duration: 0.5 },
+    extendTimeline: true,
+  });
 
-  function rotateReview() {
-    reviewElement?.classList.remove("fade-in");
-    reviewElement?.classList.add("fade-out");
+  gsap.registerEffect({
+    name: "fade",
+    effect: (targets, config) => {
+      return gsap.fromTo(
+        targets,
+        { x: 100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out",
+        }
+      );
+    },
+    defaults: { duration: 0.5 },
+    extendTimeline: true,
+  });
+  let tl = gsap.timeline();
 
-    setTimeout(() => {
-      current = (current + 1) % reviews.length;
-      reviewElement.textContent = reviews[current];
-      reviewElement?.classList.remove("fade-out");
-      reviewElement?.classList.add("fade-in");
-    }, 500);
-  }
+  tl.explode(".hero-title", {
+    duration: 0.5,
+  })
+    .explode(".hero-subtitle", { duration: 1 }, "+=.1")
+    .explode(".hero-button", { duration: 1 }, "+=.1")
+    .fade(".hero-incentives", { duration: 1 }, "+=.1")
+    .fade(".hero-icon", { duration: 1 }, "+=.1");
 
-  setInterval(rotateReview, 4000);
+  window.addEventListener("DOMContentLoaded", () => {
+    const reviews = [
+      "Elohim convirtió nuestra casa en un hogar. ¡Gracias! — Laura G.",
+      "Con su ayuda, logramos nuestro sueño. Profesionalismo total. — Carlos y Ana",
+      "Rápidos, eficientes y con excelente trato. ¡Recomendadísimos! — Marta R.",
+      "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
+    ];
+    let current = 0;
+    const reviewElement = document.getElementById("rotating-review");
+    function rotateReview() {
+      reviewElement?.classList.remove("fade-in");
+      reviewElement?.classList.add("fade-out");
+      setTimeout(() => {
+        current = (current + 1) % reviews.length;
+        reviewElement.textContent = reviews[current];
+        reviewElement?.classList.remove("fade-out");
+        reviewElement?.classList.add("fade-in");
+      }, 500);
+    }
+    setInterval(rotateReview, 4000);
+  });
 </script>
