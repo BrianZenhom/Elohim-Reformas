@@ -382,9 +382,10 @@ import TextPlugin from "gsap/TextPlugin";
     effect: (targets, config) => {
       return gsap.fromTo(
         targets,
-        { filter: "blur(100px)" },
+        { filter: "blur(100px)", opacity: 0 },
         {
           filter: "blur(0px)",
+          opacity: 1,
           duration: 0.6,
           ease: "power2.out",
         }
