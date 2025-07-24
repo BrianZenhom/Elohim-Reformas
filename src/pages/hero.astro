@@ -132,6 +132,14 @@ import TextPlugin from "gsap/TextPlugin";
     gap: 1rem;
   }
 
+  .hero-title {
+    opacity: 0;
+  }
+
+  .hero-subtitle {
+    opacity: 0;
+  }
+
   .hero-title-sub {
     display: flex;
     flex-direction: column;
@@ -178,6 +186,7 @@ import TextPlugin from "gsap/TextPlugin";
     font-weight: 500;
     letter-spacing: 1px;
     transition: all 0.1s ease-out;
+    opacity: 0;
   }
 
   .hero-button:hover {
@@ -387,35 +396,29 @@ import TextPlugin from "gsap/TextPlugin";
           filter: "blur(0px)",
           opacity: 1,
           duration: 1,
-          ease: "power2.out",
         }
       );
     },
-    defaults: { duration: 1 },
+    defaults: { duration: 1.5 },
     extendTimeline: true,
   });
 
   gsap.registerEffect({
     name: "fade",
     effect: (targets, config) => {
-      return gsap.fromTo(
-        targets,
-        { x: 100, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
+      return gsap.from(targets, {
+        x: 100,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     },
-    defaults: { duration: 1 },
+    defaults: { duration: 1.5 },
     extendTimeline: true,
   });
   const appearItems = [
-    { selector: ".hero-title", duration: 3 },
-    { selector: ".hero-subtitle", duration: 6 },
-    { selector: ".hero-button", duration: 9 },
+    { selector: ".hero-title", duration: 1 },
+    { selector: ".hero-subtitle", duration: 400 },
+    { selector: ".hero-button", duration: 35 },
   ];
 
   let tl = gsap.timeline();
