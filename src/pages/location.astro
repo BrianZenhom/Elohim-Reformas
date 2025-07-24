@@ -129,10 +129,12 @@ import Mail from "../assets/mail.svg";
     font-size: 24px;
   }
 
-  @media (max-width: 900px) {
+
+  @media (width <= 900px) {
     .location {
-      padding: 2rem;
+      padding: 2rem 1rem;
     }
+
     .location-content {
       flex-direction: column;
       gap: 3rem;
@@ -159,6 +161,9 @@ import Mail from "../assets/mail.svg";
 
     .location-title-sub p {
       font-size: clamp(14px, 2vw, 18px);
+    }
+    .location-content{
+      padding: 0;
     }
   }
 </style>
