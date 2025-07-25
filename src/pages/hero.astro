@@ -10,32 +10,24 @@ const reviews = [
   "La atención al detalle marcó la diferencia en nuestro proyecto. — Felipe D.",
 ];
 
-// gsap
-import gsap from "gsap";
-import MotionPathPlugin from "gsap/MotionPathPlugin";
-import ScrollToPlugin from "gsap/ScrollToPlugin";
-import TextPlugin from "gsap/TextPlugin";
+
 ---
 
 <section class="hero" id="inicio">
   <article class="hero-content">
     <div class="hero-title-sub">
-      <h1 class="hero-title">
+      <h1 class="hero-title animate">
         <span class="highlight-word">CONSTRUYENDO</span>
         <span class="highlight-word">CON</span>
         <span class="highlight-word">PROPÓSITO.</span>
       </h1>
-      <p class="hero-subtitle">
-        Construimos con fé, ofrecemos transformar ideas en espacios reales, funcionales y
-        duraderos, cuidando cada etapa del proceso con dedicación, transparencia
-        y compromiso contigo.
+      <p class="hero-subtitle animate">
+        Ofrecemos construir ideas en espacios reales, cuidando cada etapa del proceso con dedicación, transparencia y compromiso contigo.
       </p>
-
-      <p><b>Tienes un proyecto en mente?</b><br>Te damos un presupuesto sin compromiso</p>
-
+      <p class="hero-subtitle animate"> <b>¿Tienes un proyecto en mente?</b> Te damos un presupuesto sin compromiso. Contáctanos por WhatsApp y cuéntanos tu idea.</p>
       <button
         class="hero-button"
-        onclick="window.open('https://wa.me/+34624350394', '_blank')"
+        onclick="window.open('https://wa.me/+34624350394', '_blank')" 
         >¡PEDIR PRESUPUESTO GRATIS!</button
       >
       <div class="hero-highlights">
@@ -134,13 +126,7 @@ import TextPlugin from "gsap/TextPlugin";
     gap: 1rem;
   }
 
-  .hero-title {
-    opacity: 0;
-  }
-
-  .hero-subtitle {
-    opacity: 0;
-  }
+ 
 
   .hero-title-sub {
     display: flex;
@@ -170,7 +156,7 @@ import TextPlugin from "gsap/TextPlugin";
     border-radius: 5px;
     cursor: pointer;
     margin-top: 2rem;
-    max-width: 350px;
+    max-width: 450px;
     font-family:
       "Onest",
       system-ui,
@@ -188,7 +174,6 @@ import TextPlugin from "gsap/TextPlugin";
     font-weight: 500;
     letter-spacing: 1px;
     transition: all 0.1s ease-out;
-    opacity: 0;
   }
 
   .hero-button:hover {
@@ -386,52 +371,22 @@ import TextPlugin from "gsap/TextPlugin";
 
 <script>
   import gsap from "gsap";
+  import SplitText from "gsap/src/SplitText";
 
-  // Register a custom 'explode' effect for blur/unblur animation
-  gsap.registerEffect({
-    name: "explode",
-    effect: (targets, config) => {
-      return gsap.fromTo(
-        targets,
-        { filter: "blur(300px)", opacity: 0 },
-        {
-          filter: "blur(0px)",
-          opacity: 1,
-          duration: 1,
-        }
-      );
-    },
-    defaults: { duration: 1.5 },
-    extendTimeline: true,
-  });
+  gsap.registerPlugin(SplitText)
 
-  gsap.registerEffect({
-    name: "fade",
-    effect: (targets, config) => {
-      return gsap.from(targets, {
-        x: 100,
-        duration: 1.5,
-        ease: "power2.out",
-      });
-    },
-    defaults: { duration: 1.5 },
-    extendTimeline: true,
-  });
-  const appearItems = [
-    { selector: ".hero-title", duration: 1 },
-    { selector: ".hero-subtitle", duration: 400 },
-    { selector: ".hero-button", duration: 35 },
-  ];
+  const splitText = new SplitText('.animate', {
+    type: "words"
+  })
 
-  let tl = gsap.timeline();
-  appearItems.forEach((item) => {
-    tl.explode(item.selector, { duration: item.duration }, 0); // All start at time 0
-  });
-  tl.fade(".hero-incentives", { duration: 1 }, 0).fade(
-    ".hero-icon",
-    { duration: 1 },
-    0
-  );
+  gsap.from(splitText.words, {
+    duration: 1,
+    y: 10, 
+    stagger: 0.1,
+    autoAlpha: 0,
+    filter: "blur(10px)"
+  })
+  
 
   window.addEventListener("DOMContentLoaded", () => {
     const reviews = [
