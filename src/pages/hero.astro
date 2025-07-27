@@ -21,16 +21,16 @@ const reviews = [
         <span class="highlight-word">CON</span>
         <span class="highlight-word">PROPÓSITO.</span>
       </h1>
-      <p class="hero-subtitle animate">
+      <p class="hero-subtitle text">
         Ofrecemos construir ideas en espacios reales, cuidando cada etapa del proceso con dedicación, transparencia y compromiso contigo.
       </p>
-      <p class="hero-subtitle animate"> <b>¿Tienes un proyecto en mente?</b> Te damos un presupuesto sin compromiso. Contáctanos por WhatsApp y cuéntanos tu idea.</p>
+      <p class="hero-subtitle text"> <b>¿Tienes un proyecto en mente?</b> Te damos un presupuesto sin compromiso. Contáctanos por WhatsApp y cuéntanos tu idea.</p>
       <button
         class="hero-button"
         onclick="window.open('https://wa.me/+34624350394', '_blank')" 
         >¡PEDIR PRESUPUESTO GRATIS!</button
       >
-      <div class="hero-highlights">
+      <div class="hero-highlights text">
         <div class="hero-incentives">
           <div class="stars">
             <Star /><Star /><Star /><Star /><Star />
@@ -45,7 +45,7 @@ const reviews = [
           <span class="hero-icon-item"><Ruler />Precisión a detalle</span>
         </div>
       </div>
-      <div class="hero-opinion">
+      <div class="hero-opinion text">
         <p id="rotating-review">{reviews[0]}</p>
       </div>
     </div>
@@ -379,14 +379,47 @@ const reviews = [
     type: "words"
   })
 
+  const textUp = new SplitText('.text', {
+    type: "lines"
+  })
+
   gsap.from(splitText.words, {
     duration: 1,
-    y: 10, 
-    stagger: 0.1,
+    y: 10,
+    stagger: 0.08,
     autoAlpha: 0,
-    filter: "blur(10px)"
+    filter: "blur(15px)",
+    ease: "power4.in"
+  })
+
+  gsap.from(textUp.lines, {
+    duration: 1.2,
+    y: 10,
+    stagger: 0.08,
+    autoAlpha: 0,
+    filter: "blur(15px)",
+    ease: "power4.in"
+  })
+
+  gsap.from(".hero-button", {
+    duration: 1.3, 
+    y: 10,
+    stagger: 0.08, 
+    autoAlpha: 0,
+    filter: "blur(15px)",
+    ease: "power4.in"
+  })
+
+  gsap.from(".hero_images", {
+    duration: 1.2,
+    stagger: 0.08,
+    autoAlpha: 0,
+    filter: "blur(10px)",
+    ease: "power4.in"
   })
   
+
+
 
   window.addEventListener("DOMContentLoaded", () => {
     const reviews = [
