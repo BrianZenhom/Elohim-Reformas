@@ -39,10 +39,10 @@ const reviews = [
           <span class="experience text">+14 Años de experiencia</span>
           <span class="guarante text">Garantía total</span>
         </div>
-        <div class="hero-icon text">
-          <span  class="hero-icon-item "><Clock />Entrega a tiempo</span>
-          <span class="hero-icon-item "><Brick />Diseño con calidad</span>
-          <span class="hero-icon-item "><Ruler />Precisión a detalle</span>
+        <div class="hero-icon ">
+          <div  class="hero-icon-item "> <span class="text"><Clock /></span><span class="text">Entrega a tiempo</span></div>
+          <div class="hero-icon-item "><span class="text"><Brick /> </span><span class="text">Diseño con calidad</span></div>
+          <div class="hero-icon-item "> <span class="text"><Ruler /></span><span class="text">Precisión a detalle</span></div>
         </div>
       </div>
       <div class="hero-opinion text">
@@ -247,6 +247,19 @@ const reviews = [
     display: flex;
     gap: 0.2rem;
   }
+   
+  .hero-icon-item span div{
+    height: 24px !important;
+  }
+
+  .hero-icon-item span{
+    height: 24px !important;
+  }
+
+  .text div{
+    display: flex;
+    align-items: center;
+  }
 
   @keyframes highlight {
     0% {
@@ -367,8 +380,12 @@ const reviews = [
     .hero-icons {
       font-size: 18px;
     }
-
-    
+    .text{
+      display: flex !important;
+    }
+    .hero-icon span div{
+    height: 24px !important;
+    }
   }
 </style>
 
