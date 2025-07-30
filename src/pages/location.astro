@@ -87,18 +87,22 @@ import Mail from "../assets/mail.svg";
     color: #929292;
   }
   .location-contact-info button {
-    width: 400px;
+    padding: 1.5rem 4rem;
     border: none;
     font-family: "Onest";
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 1px;
     transition: all 0.1s ease-out;
-    padding: 0.5rem;
     background-color: #1a3347;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+    width: max-content;
+  }
+
+  .location-contact-info button:hover {
+    background-color: #e98a15;
   }
 
   .location-contact-info-icon {
@@ -129,6 +133,8 @@ import Mail from "../assets/mail.svg";
     font-size: 24px;
   }
 
+  
+
 
   @media (width <= 900px) {
     .location {
@@ -141,6 +147,7 @@ import Mail from "../assets/mail.svg";
     }
     .location-contact-info button {
       width: 100%;
+      font-size: 14px;
     }
 
     .location-contact-info-icon p {

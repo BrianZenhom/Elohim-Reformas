@@ -32,8 +32,8 @@ const testimonials = [
 ];
 ---
 
-<div class="testimonials">
-  <section id="testimonios">
+<div id="testimonios" class="testimonials">
+  <section >
     <article class="testimonials-content">
       <div class="testimonials-title-sub">
         <h2>Testimonios</h2>
@@ -67,7 +67,7 @@ const testimonials = [
       "Open Sans",
       "Helvetica Neue",
       sans-serif;
-    font-size: clamp(14px, 2vw, 24px);
+    font-size: clamp(14px, 5vw, 18px);
     font-weight: 500;
     letter-spacing: 1px;
     transition: all 0.1s ease-out;
@@ -88,6 +88,10 @@ const testimonials = [
     gap: 1rem;
   }
 
+  .testimonials-title-sub p{
+    color: #bebebe;
+  }
+
   .testimonials-container {
     display: flex;
     justify-content: center;
@@ -101,3 +105,4 @@ const testimonials = [
     }
   }
 </style>
+
