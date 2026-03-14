@@ -542,6 +542,26 @@ const reviews = await fetchGoogleReviews();
     .ts-agg-num {
       font-size: 26px;
     }
+
+    .ts-subtitle {
+      font-size: 14px;
+    }
+
+    .ts-card-text {
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .ts-card-name {
+      font-size: 14px;
+    }
+
+    .ts-cta-btn {
+      font-size: 14px;
+      padding: 0.9rem 2rem;
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>
 
@@ -573,14 +593,16 @@ const reviews = await fetchGoogleReviews();
     return (outerW - GAP * (vc - 1)) / vc;
   }
 
-  function applyLayout() {
+  function applyLayout(): boolean {
     const outer = track.parentElement as HTMLElement;
     visibleCount = getVisibleCount();
     const w = getCardWidth(outer);
+    if (w <= 0) return false;
     cards.forEach((c) => {
       c.style.width = w + "px";
       c.style.minWidth = w + "px";
     });
+    return true;
   }
 
   // ── Navigation ─────────────────────────────────────────
@@ -672,29 +694,38 @@ const reviews = await fetchGoogleReviews();
     }, 120);
   });
 
-  // ── Entrance animation ─────────────────────────────────
-  gsap.set(cards, { opacity: 0, y: 28 });
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (!entries[0].isIntersecting) return;
-      observer.disconnect();
-
-      gsap.to(cards, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power3.out",
-        clearProps: "transform",
-      });
-    },
-    { threshold: 0.1 }
-  );
-
   // ── Init ───────────────────────────────────────────────
-  applyLayout();
-  goTo(0, false);
-  observer.observe(track);
-  startAuto();
+  // Double rAF ensures the browser has completed layout before we measure widths.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const ok = applyLayout();
+
+    // If layout returned 0 width (e.g. section hidden/offscreen), retry once
+    if (!ok) {
+      setTimeout(() => { applyLayout(); goTo(0, false); startAuto(); }, 150);
+      return;
+    }
+
+    goTo(0, false);
+
+    // If section is already in the viewport on load, animate immediately.
+    // If not, hide cards and trigger on scroll.
+    const rect = track.getBoundingClientRect();
+    const alreadyVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+
+    if (alreadyVisible) {
+      gsap.from(cards, { opacity: 0, y: 28, duration: 0.6, stagger: 0.1, ease: "power3.out" });
+    } else {
+      gsap.set(cards, { opacity: 0, y: 28 });
+
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+        gsap.to(cards, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" });
+      }, { threshold: 0.1 });
+
+      observer.observe(track);
+    }
+
+    startAuto();
+  }));
 </script>
