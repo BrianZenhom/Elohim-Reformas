@@ -1,0 +1,700 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// Google Places API integration
+// Runs at BUILD TIME — reviews are baked into the HTML.
+// To refresh reviews, just rebuild the site (pnpm build).
+//
+// Setup:
+//   1. Add GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID to your .env file
+//   2. Run `pnpm build` — reviews are fetched automatically
+//   3. Without the keys, the fallback static reviews below are used
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface GoogleReview {
+  author_name: string;
+  rating: number;
+  text: string;
+  relative_time_description: string;
+  profile_photo_url: string;
+  time: number;
+}
+
+interface Review {
+  author_name: string;
+  rating: number;
+  text: string;
+  relative_time_description?: string;
+  profile_photo_url?: string;
+  badgeColor: string;
+}
+
+// Palette cycled over reviews when no photo is available
+const BADGE_COLORS = ["#e98a15", "#4a8fe7", "#2d9e6b", "#9b5de5", "#e05c5c", "#2ec4b6"];
+
+const fallbackReviews: Review[] = [
+  {
+    author_name: "Angie F.",
+    rating: 5,
+    text: "Estoy muy contenta con mi cocina, ahora es el área que más disfruto en mi casa. El resultado superó todas mis expectativas.",
+    relative_time_description: "hace 2 meses",
+    badgeColor: "#e98a15",
+  },
+  {
+    author_name: "Brian Z.",
+    rating: 5,
+    text: "Elohim superó todas mis expectativas. Me dijeron 2 semanas y en 1 semana terminaron la obra. Profesionalismo total.",
+    relative_time_description: "hace 3 meses",
+    badgeColor: "#4a8fe7",
+  },
+  {
+    author_name: "Luis H.",
+    rating: 5,
+    text: "No tenía claro cómo quería mi baño, pero ejecutaron todo tal cual. El resultado era exactamente el mismo que me mostraron.",
+    relative_time_description: "hace 1 mes",
+    badgeColor: "#2d9e6b",
+  },
+  {
+    author_name: "Carlos S.",
+    rating: 5,
+    text: "Con su ayuda logramos nuestro sueño. Cada detalle fue cuidado con precisión y el equipo siempre estuvo disponible.",
+    relative_time_description: "hace 4 meses",
+    badgeColor: "#9b5de5",
+  },
+];
+
+// ── Fetch from Google Places API at build time ────────────────────────────────
+async function fetchGoogleReviews(): Promise<Review[]> {
+  const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
+  const placeId = import.meta.env.GOOGLE_PLACE_ID;
+
+  if (!apiKey || !placeId) return fallbackReviews;
+
+  try {
+    const url =
+      `https://maps.googleapis.com/maps/api/place/details/json` +
+      `?place_id=${encodeURIComponent(placeId)}` +
+      `&fields=reviews` +
+      `&language=es` +        // returns relative_time_description in Spanish
+      `&reviews_sort=newest` + // newest first
+      `&key=${apiKey}`;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    if (data.status !== "OK") throw new Error(`Places API: ${data.status}`);
+
+    const googleReviews: GoogleReview[] = data.result?.reviews ?? [];
+
+    // Only show 5-star reviews; fall back if none
+    const fiveStars = googleReviews.filter((r) => r.rating === 5);
+    const source = fiveStars.length >= 2 ? fiveStars : googleReviews;
+    if (source.length === 0) return fallbackReviews;
+
+    return source.map((r, i): Review => ({
+      author_name: r.author_name,
+      rating: r.rating,
+      text: r.text,
+      relative_time_description: r.relative_time_description,
+      profile_photo_url: r.profile_photo_url,
+      badgeColor: BADGE_COLORS[i % BADGE_COLORS.length],
+    }));
+  } catch (err) {
+    console.warn("[Testimonials] Google Places fetch failed, using fallback:", err);
+    return fallbackReviews;
+  }
+}
+
+const reviews = await fetchGoogleReviews();
+---
+
+<section id="testimonios" class="ts-wrap">
+  <div class="ts-inner">
+
+    <!-- Header -->
+    <header class="ts-header">
+      <div class="ts-header-left">
+        <span class="ts-eyebrow">Lo que dicen nuestros clientes</span>
+        <h2 class="ts-title">Testimonios</h2>
+        <p class="ts-subtitle">Cada proyecto es una historia. Aquí están las de nuestros clientes.</p>
+      </div>
+      <div class="ts-aggregate">
+        <div class="ts-agg-stars">
+          {[0,1,2,3,4].map(() => (
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.456a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.175 0l-3.38 2.455c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" />
+            </svg>
+          ))}
+        </div>
+        <span class="ts-agg-num">5.0</span>
+        <span class="ts-agg-label">valoración media</span>
+      </div>
+    </header>
+
+    <!-- Carousel -->
+    <div class="ts-carousel-outer">
+      <div class="ts-track" id="ts-track">
+        {reviews.map((r) => (
+          <article class="ts-card">
+            <div class="ts-card-top">
+              <div class="ts-card-stars">
+                {[0,1,2,3,4].map(() => (
+                  <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.456a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.175 0l-3.38 2.455c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" />
+                  </svg>
+                ))}
+              </div>
+              <span class="ts-card-quote">&ldquo;</span>
+            </div>
+            <p class="ts-card-text">{r.text}</p>
+            <footer class="ts-card-footer">
+              <div class="ts-card-divider"></div>
+              <div class="ts-card-author">
+                <div
+                  class="ts-card-badge"
+                  style={`--bc:${r.badgeColor ?? "#e98a15"}`}
+                >
+                  {r.author_name.charAt(0).toUpperCase()}
+                </div>
+                <div class="ts-card-info">
+                  <span class="ts-card-name">{r.author_name}</span>
+                  {r.relative_time_description && (
+                    <span class="ts-card-time">{r.relative_time_description}</span>
+                  )}
+                </div>
+              </div>
+            </footer>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="ts-controls">
+      <button class="ts-btn ts-btn-prev" id="ts-prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <div class="ts-dots" id="ts-dots">
+        {reviews.map((_, i) => (
+          <button class={`ts-dot${i === 0 ? " ts-dot--active" : ""}`} data-index={i} aria-label={`Testimonio ${i + 1}`}></button>
+        ))}
+      </div>
+      <button class="ts-btn ts-btn-next" id="ts-next" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="ts-cta-row">
+      <button
+        class="ts-cta-btn"
+        onclick="window.open('https://wa.me/34624350394?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios.', '_blank')"
+      >¡Quiero mi presupuesto gratis!</button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Wrapper ── */
+  .ts-wrap {
+    background-color: #1a3347;
+    width: 100%;
+    max-width: none;
+  }
+
+  .ts-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  /* ── Header ── */
+  .ts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+
+  .ts-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ts-eyebrow {
+    font-family: "Onest", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: #e98a15;
+  }
+
+  .ts-title {
+    font-family: "Onest", sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .ts-subtitle {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ts-aggregate {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .ts-agg-stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ts-agg-stars svg {
+    width: 18px;
+    height: 18px;
+    color: #e98a15;
+  }
+
+  .ts-agg-num {
+    font-family: "Onest", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .ts-agg-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* ── Carousel outer ── */
+  .ts-carousel-outer {
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  .ts-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  /* ── Card ── */
+  .ts-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    flex-shrink: 0;
+    transition:
+      border-color 0.3s ease,
+      background 0.3s ease,
+      box-shadow 0.3s ease;
+    /* width set by JS */
+  }
+
+  .ts-card:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .ts-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .ts-card-stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ts-card-stars svg {
+    width: 15px;
+    height: 15px;
+    color: #e98a15;
+  }
+
+  .ts-card-quote {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 52px;
+    line-height: 0.6;
+    color: #e98a15;
+    opacity: 0.35;
+    user-select: none;
+  }
+
+  .ts-card-text {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0;
+    flex: 1;
+  }
+
+  .ts-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ts-card-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .ts-card-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .ts-card-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--bc) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--bc) 45%, transparent);
+    color: var(--bc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Onest", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .ts-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ts-card-name {
+    font-family: "Onest", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .ts-card-time {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  /* ── Controls ── */
+  .ts-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .ts-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .ts-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ts-btn:hover {
+    background: rgba(233, 138, 21, 0.15);
+    border-color: rgba(233, 138, 21, 0.5);
+    color: #e98a15;
+    transform: scale(1.08);
+  }
+
+  .ts-btn:active {
+    transform: scale(0.95);
+  }
+
+  .ts-btn:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .ts-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ts-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.22);
+    cursor: pointer;
+    padding: 0;
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease,
+      width 0.25s ease;
+  }
+
+  .ts-dot--active {
+    background: #e98a15;
+    width: 24px;
+    border-radius: 4px;
+    transform: none;
+  }
+
+  /* ── Bottom CTA ── */
+  .ts-cta-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ts-cta-btn {
+    padding: 1rem 2.5rem;
+    background-color: #e98a15;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "Onest", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .ts-cta-btn:hover {
+    background-color: #d4790f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(233, 138, 21, 0.4);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .ts-inner {
+      padding: 3.5rem 1.25rem;
+      gap: 2.5rem;
+    }
+
+    .ts-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .ts-title {
+      font-size: 26px;
+    }
+
+    .ts-aggregate {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ts-agg-num {
+      font-size: 26px;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  const track = document.getElementById("ts-track") as HTMLElement;
+  const prevBtn = document.getElementById("ts-prev") as HTMLButtonElement;
+  const nextBtn = document.getElementById("ts-next") as HTMLButtonElement;
+  const dotsContainer = document.getElementById("ts-dots") as HTMLElement;
+
+  const cards = Array.from(track.children) as HTMLElement[];
+  const total = cards.length;
+  let current = 0;
+  let autoTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // ── Layout ──────────────────────────────────────────────
+  // Show 2 cards on desktop, 1 on mobile
+  let visibleCount = 2;
+  const GAP = 24; // matches CSS 1.5rem gap
+
+  function getVisibleCount() {
+    return window.innerWidth <= 900 ? 1 : 2;
+  }
+
+  function getCardWidth(outer: HTMLElement) {
+    const outerW = outer.offsetWidth;
+    const vc = getVisibleCount();
+    return (outerW - GAP * (vc - 1)) / vc;
+  }
+
+  function applyLayout() {
+    const outer = track.parentElement as HTMLElement;
+    visibleCount = getVisibleCount();
+    const w = getCardWidth(outer);
+    cards.forEach((c) => {
+      c.style.width = w + "px";
+      c.style.minWidth = w + "px";
+    });
+  }
+
+  // ── Navigation ─────────────────────────────────────────
+  const maxIndex = () => Math.max(0, total - visibleCount);
+
+  function goTo(index: number, animated = true) {
+    current = Math.max(0, Math.min(index, maxIndex()));
+    const outer = track.parentElement as HTMLElement;
+    const w = getCardWidth(outer);
+    const offset = -(current * (w + GAP));
+
+    if (animated) {
+      gsap.to(track, {
+        x: offset,
+        duration: 0.55,
+        ease: "power3.inOut",
+      });
+    } else {
+      gsap.set(track, { x: offset });
+    }
+
+    // dots
+    const dots = Array.from(dotsContainer.querySelectorAll<HTMLElement>(".ts-dot"));
+    dots.forEach((d, i) => {
+      d.classList.toggle("ts-dot--active", i === current);
+    });
+
+    // buttons
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex();
+  }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => {
+      goTo(current >= maxIndex() ? 0 : current + 1);
+    }, 4500);
+  }
+
+  function stopAuto() {
+    if (autoTimer !== null) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  // ── Events ─────────────────────────────────────────────
+  prevBtn.addEventListener("click", () => {
+    stopAuto();
+    goTo(current - 1);
+    startAuto();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    stopAuto();
+    goTo(current + 1);
+    startAuto();
+  });
+
+  dotsContainer.addEventListener("click", (e) => {
+    const dot = (e.target as HTMLElement).closest<HTMLElement>(".ts-dot");
+    if (!dot) return;
+    const idx = Number(dot.dataset.index);
+    stopAuto();
+    goTo(idx);
+    startAuto();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  track.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  track.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) < 40) return;
+    stopAuto();
+    goTo(dx < 0 ? current + 1 : current - 1);
+    startAuto();
+  }, { passive: true });
+
+  // Resize
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      applyLayout();
+      goTo(Math.min(current, maxIndex()), false);
+    }, 120);
+  });
+
+  // ── Entrance animation ─────────────────────────────────
+  gsap.set(cards, { opacity: 0, y: 28 });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries[0].isIntersecting) return;
+      observer.disconnect();
+
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+        clearProps: "transform",
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // ── Init ───────────────────────────────────────────────
+  applyLayout();
+  goTo(0, false);
+  observer.observe(track);
+  startAuto();
+</script>

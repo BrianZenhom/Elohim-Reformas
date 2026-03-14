@@ -32,15 +32,18 @@
           >
         </p>
       </div>
+      <button
+        class="about-cta"
+        onclick="window.open('https://wa.me/34624350394?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios.', '_blank')"
+      >Solicitar presupuesto gratis</button>
     </div>
-    <img src="/aboutus.webp" alt="About Us Image" class="about_images" />
+    <img src="/aboutus.webp" alt="Equipo de Elohim Reformas trabajando en una obra de construcción en Madrid" class="about_images" />
   </article>
 </section>
 
 <style>
   .about {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding: 5rem 2rem;
     background-color: #f5efe7;
     color: #1a3347;
     font-family:
@@ -56,23 +59,34 @@
       "Open Sans",
       "Helvetica Neue",
       sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: 1px;
     transition: all 0.1s ease-out;
+  }
+
+  .about_content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
   }
 
   .about-title-sub {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
   }
 
   .about-quienessomos {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .about-quienessomos h2 {
+    font-size: 38px;
   }
 
   .about-nuestramission {
@@ -94,33 +108,55 @@
     color: #e98a15;
   }
 
-  .about_images {
-    width: 100%;
-    max-height: 460px;
-    overflow: hidden;
+  .about-cta {
+    padding: 0.9rem 2rem;
+    background-color: #1a3347;
+    color: #fff;
+    border: none;
     border-radius: 5px;
-    position: relative;
-    background-position: center;
-    padding-top: 5rem;
+    cursor: pointer;
+    font-family: "Onest", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: background-color 0.1s ease-out;
+    width: fit-content;
   }
 
-  .about_content img {
+  .about-cta:hover {
+    background-color: #e98a15;
+  }
+
+  .about_images {
+    flex: 1;
+    min-width: 0;
+    max-height: 520px;
+    width: 100%;
+    display: block;
+    border-radius: 12px;
     object-fit: cover;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    align-self: stretch;
   }
 
   @media (width <= 900px) {
     .about {
-      padding: 2rem 1rem;
+      padding: 3rem 1.5rem;
+    }
+
+    .about_content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-title-sub {
+      width: 100%;
     }
     .about-title-sub h2 {
-      font-size: 18px;
+      font-size: 26px;
     }
 
     .about-title-sub p {
-      font-size: 14px;
+      font-size: 15px;
       color: #929292;
       text-wrap: balance;
     }
@@ -130,12 +166,17 @@
     }
 
     .about-nuestramission h3 {
-      font-size: 16px;
+      font-size: 20px;
     }
 
     .about-nuestramission b {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
+    }
+
+    .about_images {
+      max-height: 280px;
+      margin-top: 0;
     }
   }
 </style>

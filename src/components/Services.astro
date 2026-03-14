@@ -1,0 +1,381 @@
+---
+import Card from "./card.astro";
+import Design from "../assets/design.svg";
+import Construction from "../assets/construction.svg";
+import Maintenance from "../assets/maintenance.svg";
+
+const stripDigits = Array.from({ length: 50 }, (_, i) => i % 10);
+---
+
+<section class="services" id="services">
+  <article class="services-content">
+    <div class="services-title-sub">
+      <h2>Servicios</h2>
+      <p>
+        Nuestras habilidades y experiencia nos permiten <br /> obtener los mejores
+        resultados.
+      </p>
+    </div>
+    <div class="services-cards">
+      <Card
+        title="Diseño"
+        description="Creamos proyectos arquitectónicos únicos que se adaptan a tu estilo, necesidades y presupuesto."
+        icon={Design}
+        image="./diseno.webp"
+      />
+      <Card
+        title="Construcción"
+        description="Ejecutamos tu obra con materiales de calidad y profesionales expertos, desde los cimientos hasta los acabados."
+        icon={Construction}
+        image="./construccion.webp"
+      />
+      <Card
+        title="Mantenimiento"
+        description="Solucionamos filtraciones, arreglos eléctricos, pintura y más para mantener tu casa como nueva."
+        icon={Maintenance}
+        image="./mantenimiento.webp"
+      />
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-item">
+        <span class="stat-eyebrow">Clientes satisfechos</span>
+        <div class="odometer-container">
+          <span class="odometer-plus" id="plus-1">+</span>
+          <div class="odometer services-number" id="odometer">
+            {[0, 1, 2, 3].map(() => (
+              <div class="digit-column">
+                <div class="digit-strip">
+                  {stripDigits.map((d) => <div>{d}</div>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <span class="stat-desc">Completamente comprometidos con cada proyecto</span>
+      </div>
+
+      <div class="stats-divider"></div>
+
+      <div class="stat-item">
+        <span class="stat-eyebrow">Proyectos completados</span>
+        <div class="odometer-container">
+          <span class="odometer-plus" id="plus-2">+</span>
+          <div class="odometer services-number" id="odometer-experience">
+            {[0, 1, 2, 3].map(() => (
+              <div class="digit-column">
+                <div class="digit-strip">
+                  {stripDigits.map((d) => <div>{d}</div>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <span class="stat-desc">Más de 14 años de experiencia</span>
+      </div>
+    </div>
+  </article>
+
+  <style is:global>
+    .services {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+      background-color: #f5efe7;
+      color: #1a3347;
+      font-family: "Onest", system-ui, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      max-width: none;
+      width: 100%;
+    }
+
+    .services-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .services-title-sub {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .services-title-sub h2 {
+      font-weight: 700;
+      font-size: 38px;
+    }
+
+    .services-title-sub p {
+      text-wrap: balance;
+      color: #929292;
+      font-size: 16px;
+    }
+
+    .services-cards {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3rem;
+      background: #1a3347;
+      border-radius: 20px;
+      padding: 3rem 4rem;
+      gap: 0;
+    }
+
+    .stat-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .stat-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: "Onest";
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .stat-desc {
+      font-size: 13px;
+      font-family: "Roboto", sans-serif;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+    }
+
+    .stats-divider {
+      width: 1px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.12);
+      margin: 0 4rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Odometer ── */
+    .odometer-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: fit-content;
+      margin: 0.15rem auto;
+    }
+
+    .odometer-plus {
+      color: #e98a15;
+      font-size: 0.42em;
+      font-weight: 800;
+      font-family: "Onest";
+      line-height: 1;
+      margin-top: 0.1em;
+      margin-right: 2px;
+      opacity: 0;
+    }
+
+    .services-number {
+      font-weight: 800;
+      font-size: 96px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .odometer {
+      display: flex;
+    }
+
+    .digit-column {
+      overflow: hidden;
+      height: 1em;
+      width: 1ch;
+      position: relative;
+    }
+
+    .digit-strip {
+      display: flex;
+      flex-direction: column;
+      will-change: transform;
+    }
+
+    .digit-strip div {
+      height: 1em;
+      line-height: 1em;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    @media (width <= 900px) {
+      .services {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+
+      .services-content {
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .services-title-sub h2 {
+        font-size: 26px;
+      }
+
+      .services-title-sub p {
+        font-size: 15px;
+      }
+
+      .services-cards {
+        flex-direction: column;
+        gap: 1.25rem;
+        width: 100%;
+      }
+
+      .services-cards .card {
+        flex: none;
+        width: 100%;
+        height: 320px;
+      }
+
+      .card-content h3 {
+        font-size: 18px;
+      }
+
+      .card-content p {
+        font-size: 14px;
+      }
+
+      .stats-strip {
+        flex-direction: column;
+        gap: 2.5rem;
+        padding: 2.5rem 2rem;
+        border-radius: 16px;
+      }
+
+      .stats-divider {
+        width: 60px;
+        height: 1px;
+        margin: 0;
+      }
+
+      .services-number {
+        font-size: 64px;
+      }
+
+      .stat-eyebrow {
+        font-size: 11px;
+      }
+    }
+  </style>
+
+  <script>
+    import gsap from "gsap";
+
+    const odometer1 = document.getElementById("odometer") as HTMLElement;
+    const odometer2 = document.getElementById(
+      "odometer-experience"
+    ) as HTMLElement;
+    const plus1 = document.getElementById("plus-1") as HTMLElement;
+    const plus2 = document.getElementById("plus-2") as HTMLElement;
+
+    const START_POS = 10;
+    let digitHeight = 0;
+    let hasAnimated = false;
+
+    async function init() {
+      await document.fonts.ready;
+
+      const firstDiv = odometer1?.querySelector(
+        ".digit-strip div"
+      ) as HTMLElement;
+      if (!firstDiv) return;
+
+      digitHeight = firstDiv.getBoundingClientRect().height;
+      if (!digitHeight) return;
+
+      [odometer1, odometer2].forEach((odo) => {
+        odo.querySelectorAll(".digit-strip").forEach((strip) => {
+          gsap.set(strip, {
+            y: -(START_POS * digitHeight),
+            immediateRender: true,
+          });
+        });
+      });
+    }
+
+    function animateOdometer(
+      targetNumber: number,
+      container: HTMLElement,
+      plusEl: HTMLElement
+    ) {
+      const digits = String(targetNumber)
+        .padStart(4, "0")
+        .split("")
+        .map(Number);
+      const columns = container.querySelectorAll(".digit-column");
+
+      columns.forEach((col, i) => {
+        const strip = col.querySelector(".digit-strip") as HTMLElement;
+        const digit = digits[i];
+
+        // From START_POS (10), spin 3 full turns, land on target digit
+        // Max end position: 10 + 30 + 9 = 49 — safe with 50 divs (indices 0–49)
+        const endPos = START_POS + 30 + digit;
+
+        // Column 0 (thousands) settles first — shorter duration
+        // Column 3 (units) settles last — longer duration
+        const duration = 1.6 + i * 0.35;
+
+        gsap.to(strip, {
+          y: -(endPos * digitHeight),
+          duration: duration,
+          ease: "power4.out",
+        });
+      });
+
+      gsap.to(plusEl, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+        delay: 0.4,
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            hasAnimated = true;
+            animateOdometer(1200, odometer1, plus1);
+            animateOdometer(1100, odometer2, plus2);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    init().then(() => {
+      const rect = odometer1?.getBoundingClientRect();
+      if (rect && rect.top < window.innerHeight && rect.bottom >= 0) {
+        hasAnimated = true;
+        animateOdometer(1200, odometer1, plus1);
+        animateOdometer(1100, odometer2, plus2);
+      } else {
+        observer.observe(odometer1);
+      }
+    });
+  </script>
+</section>

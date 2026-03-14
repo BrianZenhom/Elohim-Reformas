@@ -2,273 +2,323 @@
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
 
-interface Props {
-  client: "browser";
-  title: string;
-}
+const SITE_URL = import.meta.env.SITE_URL ?? "https://elohimreformas.com";
 
-const { client, title } = Astro.props;
+const title       = "Elohim Reformas | Diseño, Construcción y Reformas en Madrid";
+const description = "Empresa de reformas y construcción en Madrid con más de 14 años de experiencia. Diseño de interiores, reforma de cocinas, baños y mantenimiento del hogar. +1.200 clientes satisfechos.";
+const canonical   = SITE_URL + "/";
+const ogImage     = SITE_URL + "/og-image.png"; // 1200×630 px — drop the file in /public
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Elohim Edifica" />
-    <meta
-      name="keywords"
-      content="Elohim Edifica, Reformas, Construcción, Diseño"
-    />
-    <meta name="author" content="Elohim Edifica" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Primary SEO -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords"    content="reformas Madrid, reforma cocina Madrid, reforma baño Madrid, construcción Madrid, diseño de interiores Madrid, empresa de reformas España, Elohim Reformas" />
+    <meta name="author"      content="Elohim Reformas" />
+    <meta name="robots"      content="index, follow" />
+    <link rel="canonical"    href={canonical} />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonical} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={ogImage} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale"      content="es_ES" />
+    <meta property="og:site_name"   content="Elohim Reformas" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD: Local Business structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HomeAndConstructionBusiness",
+      "name": "Elohim Reformas",
+      "description": description,
+      "url": SITE_URL,
+      "logo": SITE_URL + "/favicon.svg",
+      "image": ogImage,
+      "telephone": "+34624350394",
+      "email": "contacto@elohimreformas.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Madrid",
+        "addressRegion": "Comunidad de Madrid",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.4168,
+        "longitude": -3.7038
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "13:00"
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de Reforma",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Diseño de interiores" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Remodelación de cocinas" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Remodelación de baños" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Construcción y obra civil" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mantenimiento del hogar" } }
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/elohimreformas"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "1200"
+      }
+    })} />
+
+    <meta name="generator" content={Astro.generator} />
   </head>
-  <Navbar client="browser" />
+
   <body>
+    <Navbar client="browser" />
     <main>
       <slot />
     </main>
-  </body>
-  <Footer client="browser" />
+    <Footer client="browser" />
 
-  <style is:global>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-100-normal.woff");
-      font-weight: 100;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-200-normal.woff");
-      font-weight: 200;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-300-normal.woff");
-      font-weight: 300;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-400-normal.woff");
-      font-weight: 400;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-500-normal.woff");
-      font-weight: 500;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-600-normal.woff");
-      font-weight: 600;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-700-normal.woff");
-      font-weight: 700;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-800-normal.woff");
-      font-weight: 800;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Onest";
-      src: url("/fonts/onest-latin-900-normal.woff");
-      font-weight: 900;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "Roboto";
-      src: url("/fonts/Roboto-Regular.woff");
-      font-weight: 400;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: "RobotoItalic";
-      src: url("/fonts/Roboto-Italic.woff");
-      font-weight: 400;
-      font-style: italic;
-    }
-
-    html,
-    body {
-      background-color: #f5efe7;
-      color: #1a3347;
-      font-family:
-        "Onest",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Open Sans",
-        "Helvetica Neue",
-        sans-serif;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      overflow-y: auto;
-      width: 100vw;
-    }
-
-    a {
-      display: inline-block;
-      line-height: 0;
-    }
-
-    p {
-      font-family:
-        "Roboto",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Open Sans",
-        "Helvetica Neue",
-        sans-serif;
-      line-height: 1.3;
-    }
-
-    section {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .hero {
-      position: relative;
-      width: 100%;
-    }
-
-    .about-line {
-      content: "";
-      height: 1px;
-      background: linear-gradient(to right, #1a334700, #000000, #e98a1500);
-      margin: 0;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-  </style>
-
-  <script>
-    const NAVBAR_OFFSET = 72; // Adjust if your navbar has a different height
-
-    // Scroll to section with offset
-    const scrollToSection = (id) => {
-      const section = document.querySelector(`#${id}`);
-      if (section) {
-        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-        const targetPosition = sectionTop - NAVBAR_OFFSET;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-      }
-    };
-
-    // Update active link based on scroll position
-    const updateActiveLink = () => {
-      const navLinks = document.querySelectorAll("#navlinks a");
-      const sections = document.querySelectorAll("section");
-      let current = "";
-
-      if (window.scrollY < 100) {
-        current = "inicio";
-      } else {
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          const sectionId = section.getAttribute("id");
-          const offset = NAVBAR_OFFSET;
-
-          if (
-            sectionId &&
-            window.scrollY >= sectionTop - sectionHeight / 3 - offset
-          ) {
-            current = sectionId;
-          }
-        });
+    <style is:global>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        const href = link.getAttribute("href");
-        const linkText = link.textContent?.toLowerCase() || "";
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-100-normal.woff");
+        font-weight: 100;
+        font-style: normal;
+      }
 
-        if (current === "inicio" && (href === "#" || href === "#inicio")) {
-          link.classList.add("active");
-        } else if (href && href === `#${current}`) {
-          link.classList.add("active");
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-200-normal.woff");
+        font-weight: 200;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-300-normal.woff");
+        font-weight: 300;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-400-normal.woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-500-normal.woff");
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-600-normal.woff");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-700-normal.woff");
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-800-normal.woff");
+        font-weight: 800;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Onest";
+        src: url("/fonts/onest-latin-900-normal.woff");
+        font-weight: 900;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Roboto";
+        src: url("/fonts/Roboto-Regular.woff");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "RobotoItalic";
+        src: url("/fonts/Roboto-Italic.woff");
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      html,
+      body {
+        background-color: #f5efe7;
+        color: #1a3347;
+        font-family:
+          "Onest",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Open Sans",
+          "Helvetica Neue",
+          sans-serif;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 100vw;
+      }
+
+      a {
+        display: inline-block;
+        line-height: 0;
+      }
+
+      p {
+        font-family:
+          "Roboto",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Open Sans",
+          "Helvetica Neue",
+          sans-serif;
+        line-height: 1.3;
+      }
+
+      section {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .hero {
+        position: relative;
+        width: 100%;
+      }
+
+      .about-line {
+        content: "";
+        height: 1px;
+        background: linear-gradient(to right, #1a334700, #000000, #e98a1500);
+        margin: 0;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+    </style>
+
+    <script>
+      const NAVBAR_OFFSET = 72;
+
+      const scrollToSection = (id) => {
+        const section = document.querySelector(`#${id}`);
+        if (section) {
+          const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({ top: sectionTop - NAVBAR_OFFSET, behavior: "smooth" });
         }
-      });
-    };
+      };
 
-    // Set scroll-margin-top for all sections (for native anchor clicks)
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll("section").forEach((section) => {
-        section.style.scrollMarginTop = NAVBAR_OFFSET + "px";
-      });
+      const updateActiveLink = () => {
+        const navLinks = document.querySelectorAll("#navlinks a");
+        const sections = document.querySelectorAll("section");
+        let current = "";
 
-      // Handle scroll on page load with hash
-      const hash = window.location.hash;
-      if (hash) {
-        const id = hash.replace("#", "");
-        setTimeout(() => {
-          scrollToSection(id);
-        }, 10);
-      }
+        if (window.scrollY < 100) {
+          current = "inicio";
+        } else {
+          sections.forEach((section) => {
+            const sectionTop    = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            const sectionId     = section.getAttribute("id");
+            if (sectionId && window.scrollY >= sectionTop - sectionHeight / 3 - NAVBAR_OFFSET) {
+              current = sectionId;
+            }
+          });
+        }
 
-      // Add click listeners
-      const navLinks = document.querySelectorAll("#navlinks a");
-      navLinks.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
           const href = link.getAttribute("href");
-          if (href) {
-            const targetId = href.replace("#", "");
-            scrollToSection(targetId);
+          if (current === "inicio" && (href === "#" || href === "#inicio")) {
+            link.classList.add("active");
+          } else if (href === `#${current}`) {
+            link.classList.add("active");
           }
         });
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("section").forEach((section) => {
+          section.style.scrollMarginTop = NAVBAR_OFFSET + "px";
+        });
+
+        const hash = window.location.hash;
+        if (hash) setTimeout(() => scrollToSection(hash.replace("#", "")), 10);
+
+        document.querySelectorAll("#navlinks a").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const href = link.getAttribute("href");
+            if (href) scrollToSection(href.replace("#", ""));
+          });
+        });
+
+        updateActiveLink();
+        window.addEventListener("scroll", updateActiveLink);
       });
-
-      // Initial check
-      updateActiveLink();
-      window.addEventListener("scroll", updateActiveLink);
-    });
-  </script>
-
-
+    </script>
+  </body>
 </html>
